@@ -1,0 +1,68 @@
+.menu {
+  display: flex;
+  gap: 12px;
+
+  &__section {
+    width: 208px;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    background-color: #353D4B;
+    padding: 8px 12px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+  }
+
+  &__heading {
+    margin: 0;
+    font-family: var(--font-family);
+    font-weight: var(--font-weight);
+    color: var(--font-color-light);
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.02em;
+  }
+
+  &__content {
+    margin: 0;
+    padding: 8px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background-color: #fff;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+  }
+
+  &__span {
+    font-family: var(--font-family);
+    font-weight: var(--font-weight);
+    color: var(--font-color-dark);
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.02em;
+    display: flex;
+    background-color: var(--bg-color-light);
+    padding: 2px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    box-sizing: border-box;
+    border: 1px solid var(--bg-color-light);
+
+    &:hover {
+      color: var(--font-color);
+    }
+
+    &_current {
+      box-shadow: 0 0 0 1px black;
+    }
+  }
+
+  &__input:checked + &__span {
+    color: var(--font-color);
+    border: 1px solid var(--btn-color-default);
+  }
+}
