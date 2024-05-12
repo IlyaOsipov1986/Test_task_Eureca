@@ -2,15 +2,27 @@ import DeleteButton from "../ui/DeleteButton/DeleteButton.jsx";
 import AddPlusButton from "../ui/AddPlusButton/AddPlusButton.jsx";
 import Table from "../ui/Table/Table.jsx";
 import {useState} from "react";
-import Modal from "../Modal/Modal.jsx";
+import {useOnClickOutsideModal} from "../../utils/customHook/useOnClickOutsideModal.jsx";
+import MenuModal from "../Modal/MenuModal.jsx";
 
 const HouseCard = ({...house}) => {
 
-    const [tableData, setDataTable] = useState([]);
+    const [tableData, setTableData] = useState([]);
     const [isOpenModal, setIsOpenModal] = useState(false);
 
     const onButtonClickDelete = () => {
-        setDataTable([]);
+        setTableData([]);
+    }
+
+    useOnClickOutsideModal(isOpenModal, () => setIsOpenModal(false))
+
+    const onButtonClickOpenModal = (e) => {
+        e.stopPropagation();
+        if(isOpenModal) {
+            setIsOpenModal(false)
+        } else {
+            setIsOpenModal(true)
+        }
     }
 
     return (
@@ -19,11 +31,15 @@ const HouseCard = ({...house}) => {
                 <h3>{house.numberHouse}</h3>
                 <div style={{ display: "flex", flexDirection: "row", gap:'8px' }}>
                     <DeleteButton onClick={onButtonClickDelete}/>
-                    <AddPlusButton onClick={() => setIsOpenModal(!isOpenModal)}/>
+                    <AddPlusButton onClick={onButtonClickOpenModal}/>
                 </div>
             </div>
             <Table tableData={tableData} />
-            {isOpenModal && <Modal/>}
+            {isOpenModal && <MenuModal
+                tableData={tableData}
+                setTableData={setTableData}
+                closeModal={() => setIsOpenModal(false)}
+            />}
         </section>
     )
 }

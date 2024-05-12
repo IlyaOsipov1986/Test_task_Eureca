@@ -5,6 +5,7 @@ const CloseButton = ({...arg}) => {
 
     const buttonClass = classNames({
         "button-default": true,
+        "button-close" : true
     });
 
     return (

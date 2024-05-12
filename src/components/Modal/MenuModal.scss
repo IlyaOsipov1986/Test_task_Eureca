@@ -1,3 +1,12 @@
+.modal {
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: -380px;
+  z-index: 2;
+  width: 100%;
+}
+
 .menu {
   display: flex;
   gap: 12px;
@@ -17,9 +26,9 @@
 
   &__heading {
     margin: 0;
-    font-family: var(--font-family);
-    font-weight: var(--font-weight);
-    color: var(--font-color-light);
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    color: #FFFFFF;
     font-size: 14px;
     line-height: 20px;
     letter-spacing: 0.02em;
@@ -38,22 +47,21 @@
   }
 
   &__span {
-    font-family: var(--font-family);
-    font-weight: var(--font-weight);
-    color: var(--font-color-dark);
+    font-weight: 500;
+    color: #6D7885;
     font-size: 14px;
     line-height: 20px;
     letter-spacing: 0.02em;
     display: flex;
-    background-color: var(--bg-color-light);
+    background-color: #E4E5E8;
     padding: 2px 8px;
     border-radius: 6px;
     cursor: pointer;
     box-sizing: border-box;
-    border: 1px solid var(--bg-color-light);
+    border: 1px solid #E4E5E8;
 
     &:hover {
-      color: var(--font-color);
+      color: #353D4B;
     }
 
     &_current {
@@ -62,7 +70,13 @@
   }
 
   &__input:checked + &__span {
-    color: var(--font-color);
-    border: 1px solid var(--btn-color-default);
+    color: #353D4B;
+    border: 1px solid #4587ED;
   }
+}
+.menu__error-message {
+  font-size: 12px;
+  line-height: 110%;
+  font-weight: 300;
+  color: #FF4970;
 }

@@ -3,7 +3,8 @@ import classNames from "classnames";
 const AddSubmitButton = ({children,...arg}) => {
 
     const buttonClass = classNames({
-        "button-default": true,
+        "button-default" : true,
+        "button-submit" : true
     });
 
     return (

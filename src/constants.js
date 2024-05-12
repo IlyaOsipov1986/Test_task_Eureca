@@ -1,22 +1,11 @@
 export const houses = [
     {
         id: 1,
-        numberHouse: 'Дом 1',
-        tableData: [
-            {
-                entrance: 1,
-                flats: [1, 2]
-            },
-            {
-                entrance: 2,
-                flats: [1, 2, 3, 4, 5, 6]
-            }
-        ]
+        numberHouse: 'Дом 1'
     },
     {
         id: 2,
-        numberHouse: 'Дом 2',
-        tableData: []
+        numberHouse: 'Дом 2'
     },
     {
         id: 3,

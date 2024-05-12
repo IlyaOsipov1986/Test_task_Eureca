@@ -50,3 +50,23 @@ button {
 .button-default {
   cursor: pointer;
 }
+.button-close {
+  background-color: #353D4B;
+}
+.button-submit {
+  width: 100%;
+  height: 24px;
+  border: none;
+  border-radius: 6px;
+  background-color: #4587ED;
+  font-weight: 500;
+  color: #FFFFFF;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: .02em;
+  text-align: center;
+  &:hover {
+    background-color: #ABC7F2;
+  }
+}
+

@@ -15,7 +15,7 @@ const Table = (props) => {
             <tbody>
             {
                 tableData && tableData.length > 0 ?
-                    tableData.map((item, i) => {
+                    tableData.sort((a, b) => a.entrance - b.entrance).map((item, i) => {
                         return (
                             <tr className="table__row" key={i}>
                                 <td className="table__cell">{item.entrance}</td>
