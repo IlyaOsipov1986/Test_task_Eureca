@@ -1,10 +1,20 @@
 import {useEffect} from "react";
 
-export function useControlKeysMenuModal(isFlatsHidden, formRef, currentEntrancesId, setCurrentEntrancesId, currentMenu, currentFlatsId, setCurrentFlatsId, setIsFlatsHidden, setCurrentMenu, openFlatsMenu) {
+export function useControlKeysMenuModal(
+    isFlatsHidden,
+    formRef,
+    currentEntrancesId,
+    setCurrentEntrancesId,
+    currentMenu,
+    currentFlatsId,
+    setCurrentFlatsId,
+    setIsFlatsHidden,
+    setCurrentMenu) {
 
     useEffect(() => {
 
         function handleOnKeyDown(e) {
+            e.preventDefault();
             if (!isFlatsHidden && e.ctrlKey && e.key === 'Enter') {
                 formRef.current?.requestSubmit();
             }
@@ -35,28 +45,6 @@ export function useControlKeysMenuModal(isFlatsHidden, formRef, currentEntrances
             if (e.key === 'ArrowLeft' && !isFlatsHidden && currentMenu === 'flats') {
                 setIsFlatsHidden(true);
                 setCurrentMenu('entrances');
-            }
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                if (currentMenu === 'entrances' && currentEntrancesId <= 6 && currentEntrancesId > 0) {
-                    const selector = `section:nth-child(1) > ul > li:nth-child(${currentEntrancesId}) > label > input`;
-                    const inputElement = formRef.current?.querySelector(selector);
-                    if(inputElement?.getAttribute('checked') === 'true') {
-                        inputElement?.removeAttribute('checked');
-                    } else {
-                        inputElement?.setAttribute('checked', 'true');
-                        openFlatsMenu();
-                    }
-                }
-                if (currentMenu === 'flats' && currentFlatsId <= 6 && currentFlatsId > 0) {
-                    const selector = `section:nth-child(2) > ul > li:nth-child(${currentFlatsId}) > label > input`;
-                    const inputElement = formRef.current?.querySelector(selector);
-                    if(inputElement?.getAttribute('checked') === 'true') {
-                        inputElement?.removeAttribute('checked');
-                    } else {
-                        inputElement?.setAttribute('checked', 'true');
-                    }
-                }
             }
         }
 

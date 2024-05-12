@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import CloseButton from "../ui/CloseButton/CloseButton.jsx";
 import {useControlKeysMenuModal} from "../../utils/customHook/useControlKeysMenuModal.jsx";
 import {useCloseModal} from "../../utils/customHook/useCloseModal.jsx";
+import { getValueDefaultChecked, onButtonClickGetFlat } from "../../utils/scripts.js";
 
 const MenuModal = (props) => {
 
@@ -22,23 +23,26 @@ const MenuModal = (props) => {
     const [dataSelect, setDataSelect] = useState([]);
     const formRef = useRef(null);
 
-    const itemsFlatRef = flatsList.map(() => useRef(null)); // Инициализация массива рефов
+    // Инициализация массива рефов
+    const itemsFlatRef = flatsList.map(() => useRef(null));
 
-    useCloseModal(closeModal);
-
+    // Привязка рефов к элементам
     const setCallbackRef = (index) => (element) => {
         itemsFlatRef[index].current = element;
     };
 
-    function getValueDefaultChecked(flatId) {
-        const findEntrance = dataSelect.find(item => item.entrance === currentEntrancesId);
-        if(findEntrance) {
-            const findFlat = findEntrance.flats.find(el => el === flatId);
-            return !!findFlat;
-        }
-    }
+    useCloseModal(closeModal);
 
-    useControlKeysMenuModal(isFlatsHidden, formRef, currentEntrancesId, setCurrentEntrancesId, currentMenu, currentFlatsId, setCurrentFlatsId, setIsFlatsHidden, setCurrentMenu, openFlatsMenu);
+    useControlKeysMenuModal(
+        isFlatsHidden,
+        formRef,
+        currentEntrancesId,
+        setCurrentEntrancesId,
+        currentMenu,
+        currentFlatsId,
+        setCurrentFlatsId,
+        setIsFlatsHidden,
+        setCurrentMenu);
 
     function handleOnSubmit(e) {
         e.preventDefault();
@@ -48,39 +52,15 @@ const MenuModal = (props) => {
         setTableData([...tableData, ...filterEmptyEntrances]);
         setErrorMessage('');
         setCurrentEntrancesId(0);
+        setDataSelect([]);
         closeModal();
     }
-
-    console.log(dataSelect)
 
     function openFlatsMenu(id) {
         setIsFlatsHidden(false);
         setCurrentMenu('flats');
         setCurrentEntrancesId(id);
     }
-
-    function onButtonClickGetFlat(id, index) {
-        const findCurrentRef = itemsFlatRef.find((el, i) => i === index);
-        const findEntrance = dataSelect.find(item => item.entrance === currentEntrancesId);
-        if (findCurrentRef.current.checked) {
-            if (findEntrance) {
-                const changedEntrance = {...findEntrance, flats: [...findEntrance.flats, id].sort((a, b) => a - b)};
-                const updatedEntrance = dataSelect.map(el => el.entrance === changedEntrance.entrance ? changedEntrance : el);
-                setDataSelect(updatedEntrance);
-            } else {
-                setDataSelect([...dataSelect, {
-                    entrance: currentEntrancesId,
-                    flats: [id]
-                }]);
-            }
-        } else {
-            if (findEntrance) {
-                    const changedEntrance = {...findEntrance, flats: findEntrance.flats.filter(el => el !== id )};
-                    const updatedEntrance = dataSelect.map(el => el.entrance === changedEntrance.entrance ? changedEntrance : el);
-                    setDataSelect(updatedEntrance);
-                }
-            }
-        }
 
     function closeFlatsMenu() {
         setIsFlatsHidden(true);
@@ -124,9 +104,16 @@ const MenuModal = (props) => {
                             flatsList.map((_, index) => {
                                 const id = index + 1;
                                 return (
-                                    <li className="menu__item" key={index} onClick={() => onButtonClickGetFlat(id, index)}>
+                                    <li className="menu__item"
+                                            key={index}
+                                            onClick={() => onButtonClickGetFlat(id, index, itemsFlatRef, dataSelect, currentEntrancesId, setDataSelect)}>
                                         <label>
-                                            <input ref={setCallbackRef(index)} checked={getValueDefaultChecked(id, index)} className="menu__input" type='checkbox' hidden/>
+                                            <input
+                                                ref={setCallbackRef(index)}
+                                                checked={getValueDefaultChecked(id, dataSelect, currentEntrancesId) ?? ''}
+                                                onChange={e => (e.target.checked)}
+                                                className="menu__input" type='checkbox' hidden
+                                            />
                                             <span
                                                 className={`menu__span ${currentFlatsId === id && 'menu__span_current'}`}>Квартира {id}</span>
                                         </label>

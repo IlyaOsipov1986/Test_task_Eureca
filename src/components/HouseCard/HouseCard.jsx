@@ -1,12 +1,14 @@
 import DeleteButton from "../ui/DeleteButton/DeleteButton.jsx";
 import AddPlusButton from "../ui/AddPlusButton/AddPlusButton.jsx";
 import Table from "../ui/Table/Table.jsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useOnClickOutsideModal} from "../../utils/customHook/useOnClickOutsideModal.jsx";
 import MenuModal from "../Modal/MenuModal.jsx";
+import useAppContext from "../../utils/customHook/useAppContext.jsx";
 
 const HouseCard = ({...house}) => {
 
+    const { stateReducer, getIdSelectDoc } = useAppContext();
     const [tableData, setTableData] = useState([]);
     const [isOpenModal, setIsOpenModal] = useState(false);
 
@@ -19,11 +21,22 @@ const HouseCard = ({...house}) => {
     const onButtonClickOpenModal = (e) => {
         e.stopPropagation();
         if(isOpenModal) {
-            setIsOpenModal(false)
+            setIsOpenModal(false);
         } else {
+            getIdSelectDoc(house.id)
             setIsOpenModal(true)
         }
     }
+
+    useEffect(() => {
+        let isMounted = true;
+        if(stateReducer.idSelectHouse !== house.id && isOpenModal)  {
+            isMounted && setIsOpenModal(false)
+        }
+        return () => {
+            isMounted = false;
+        }
+    }, [stateReducer.idSelectHouse, isOpenModal]);
 
     return (
         <section className="house-card">
