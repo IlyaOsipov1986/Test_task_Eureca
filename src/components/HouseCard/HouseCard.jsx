@@ -3,17 +3,21 @@ import AddPlusButton from "../ui/AddPlusButton/AddPlusButton.jsx";
 import Table from "../ui/Table/Table.jsx";
 import {useEffect, useState} from "react";
 import {useOnClickOutsideModal} from "../../utils/customHook/useOnClickOutsideModal.jsx";
-import MenuModal from "../Modal/MenuModal.jsx";
+import useLocalstorage from "../../utils/customHook/useLocalstorage.jsx";
+import MenuModal from "../MenuModal/MenuModal.jsx";
 import useAppContext from "../../utils/customHook/useAppContext.jsx";
 
 const HouseCard = ({...house}) => {
 
     const { stateReducer, getIdSelectDoc } = useAppContext();
-    const [tableData, setTableData] = useState([]);
+    const [tableData, setTableData] = useLocalstorage([], `tableData${house.id}`);
     const [isOpenModal, setIsOpenModal] = useState(false);
 
     const onButtonClickDelete = () => {
         setTableData([]);
+        if (localStorage.getItem(`tableData${house.id}`)) {
+            localStorage.removeItem(`tableData${house.id}`);
+        }
     }
 
     useOnClickOutsideModal(isOpenModal, () => setIsOpenModal(false))
@@ -23,15 +27,15 @@ const HouseCard = ({...house}) => {
         if(isOpenModal) {
             setIsOpenModal(false);
         } else {
-            getIdSelectDoc(house.id)
-            setIsOpenModal(true)
+            getIdSelectDoc(house.id);
+            setIsOpenModal(true);
         }
     }
 
     useEffect(() => {
         let isMounted = true;
         if(stateReducer.idSelectHouse !== house.id && isOpenModal)  {
-            isMounted && setIsOpenModal(false)
+            isMounted && setIsOpenModal(false);
         }
         return () => {
             isMounted = false;

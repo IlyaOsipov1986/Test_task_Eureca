@@ -9,7 +9,9 @@ export function useControlKeysMenuModal(
     currentFlatsId,
     setCurrentFlatsId,
     setIsFlatsHidden,
-    setCurrentMenu) {
+    setCurrentMenu,
+    openFlatsMenu,
+    itemsFlatRef ) {
 
     useEffect(() => {
 
@@ -22,7 +24,7 @@ export function useControlKeysMenuModal(
                 e.preventDefault();
             }
             if (e.key === 'ArrowDown') {
-                if(currentEntrancesId === 0){
+                if(currentEntrancesId === 0) {
                     setCurrentEntrancesId(1);
                 } else if (currentMenu === 'entrances' && currentEntrancesId < 6) {
                     setCurrentEntrancesId((prev) => prev + 1);
@@ -45,6 +47,18 @@ export function useControlKeysMenuModal(
             if (e.key === 'ArrowLeft' && !isFlatsHidden && currentMenu === 'flats') {
                 setIsFlatsHidden(true);
                 setCurrentMenu('entrances');
+            }
+            if (e.key === 'Enter') {
+                if (currentMenu === 'entrances' && currentEntrancesId <= 6 && currentEntrancesId > 0) {
+                    openFlatsMenu(currentEntrancesId);
+                } else if (currentMenu === 'flats' && currentFlatsId <= 6 && currentFlatsId > 0) {
+                    const findCurrentRef = itemsFlatRef.find((el, i) => i === currentFlatsId - 1);
+                    if (findCurrentRef.current.checked) {
+                        findCurrentRef.current.checked = false;
+                    } else {
+                        findCurrentRef.current.checked = true;
+                    }
+                }
             }
         }
 

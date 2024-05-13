@@ -42,7 +42,9 @@ const MenuModal = (props) => {
         currentFlatsId,
         setCurrentFlatsId,
         setIsFlatsHidden,
-        setCurrentMenu);
+        setCurrentMenu,
+        openFlatsMenu,
+        itemsFlatRef );
 
     function handleOnSubmit(e) {
         e.preventDefault();
@@ -113,6 +115,7 @@ const MenuModal = (props) => {
                                                 checked={getValueDefaultChecked(id, dataSelect, currentEntrancesId) ?? ''}
                                                 onChange={e => (e.target.checked)}
                                                 className="menu__input" type='checkbox' hidden
+                                                name={`flat-${id}`} value={id}
                                             />
                                             <span
                                                 className={`menu__span ${currentFlatsId === id && 'menu__span_current'}`}>Квартира {id}</span>
