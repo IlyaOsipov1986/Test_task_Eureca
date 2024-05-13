@@ -1,4 +1,6 @@
-Приложение развернуть на https://test-task-eureca-2841sdrjx-ilyaosipov1986s-projects.vercel.app/
+Приложение развернуто на https://test-task-eureca-2841sdrjx-ilyaosipov1986s-projects.vercel.app/
+
+
 Краткая инструкция:
 
 
