@@ -5,7 +5,7 @@ import useGetHouse from "../../utils/customHook/useGetHouse.jsx";
 
 const HouseList = () => {
 
-    const { houseList} = useGetHouse(houses);
+    const {houseList} = useGetHouse(houses);
 
     return(
         <main className="house-list">
